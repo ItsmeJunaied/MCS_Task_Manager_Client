@@ -14,6 +14,7 @@ import LogIN from './pages/LogIN/LogIN';
 import SignUp from './pages/SignUp/SignUp';
 import Authprovider from './Authprovider/Authprovider';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
+import UpdatePage from './pages/UpdatePage/UpdatePage';
 
 
 const router = createBrowserRouter([
@@ -27,7 +28,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/addTask',
-        element: <AddTask></AddTask>
+        element: <PrivateRoute><AddTask></AddTask></PrivateRoute>
       },
       {
         path: '/viewTask',
@@ -40,6 +41,11 @@ const router = createBrowserRouter([
       {
         path: '/signup',
         element: <SignUp></SignUp>
+      },
+      {
+        path: '/update/:id',
+        element: <UpdatePage></UpdatePage>,
+        loader:({params})=>fetch(`http://localhost:5000/Task/${params.id}`)
       },
     ]
   },

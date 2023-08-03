@@ -5,11 +5,12 @@ import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import img from '../../../public/login2.png'
 import { AuthContext } from "../../Authprovider/Authprovider";
+import SocialLogin from "../SocialLogin/SocialLogin";
 
 const LogIN = () => {
 
     const [show, setShow] = useState(false);
-    const { user, signIN } = useContext(AuthContext);
+    const { user, signIN , googleSignIN} = useContext(AuthContext);
     console.log(user);
     const navigate = useNavigate();
     const location = useLocation();
@@ -63,13 +64,14 @@ const LogIN = () => {
                                     <label className="label">
                                         <span className="label-text">Password</span>
                                     </label>
-                                    <input type={show ? "text" : "password"} name="password" placeholder="password" className="relative input input-bordered" {...register('password', { required: true })} />
-                                    <p className=" text-red-800">{error}</p>
                                     <p className="absolute mt-14 ml-72" onClick={() => setShow(!show)}>
                                         <small>
-                                            {show ? <span className="text-3xl font-bold">𓁹</span> : <span className=" text-3xl font-bold">𓁹</span>}
+                                            {show ? <span className="text-5xl font-bold">𓁹</span> : <span className=" text-5xl font-bold">𓁹</span>}
                                         </small>
                                     </p>
+                                    <input type={show ? "text" : "password"} name="password" placeholder="password" className="relative input input-bordered" {...register('password', { required: true })} />
+                                    <p className=" text-red-800">{error}</p>
+                                    
                                     {errors.password && <span className="error-message">Password is required</span>}
                                 </div>
                                 <div className="form-control mt-6">
@@ -77,9 +79,9 @@ const LogIN = () => {
                                 </div>
                             </div>
                             <div>
-                                <p className=""><small>New Here? <Link className="link link-primary" to={'/signup'}>Create an Account</Link></small></p>
+                                <p className=" text-center mb-10"><small>New Here? <Link className="link link-primary" to={'/signup'}>Create an Account</Link></small></p>
                                 {/* Social LOgIN */}
-                                {/* <SocialLogin /> */}
+                                <SocialLogin/>
                             </div>
                         </form>
                     </div>

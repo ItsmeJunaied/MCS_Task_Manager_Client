@@ -1,9 +1,11 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Authprovider/Authprovider";
 import Swal from "sweetalert2";
+import { Link} from "react-router-dom";
 
 const ViewTask = () => {
 
+    
     const { user, allTask, setAllTask } = useContext(AuthContext);
     // const [allTask, setAllTask] = useState([]);
     useEffect(() => {
@@ -66,9 +68,9 @@ const ViewTask = () => {
 
     }
 
-    const handleUpdate = id => {
-        console.log(id);
-    }
+    // const handleUpdate = id => {
+    //     console.log(id);
+    // }
     return (
         <div>
             <h2 className="text-center font-bold text-3xl text-teal-600 mt-20 mb-20"><span className=" text-amber-500 uppercase">{user?.displayName}</span> Your Tasks</h2>
@@ -112,7 +114,12 @@ const ViewTask = () => {
 
 
 
-                                <td><button onClick={() => handleUpdate(item._id)} className="btn btn-sm btn-square btn-primary w-20">Update</button></td>
+                                <td>
+                                    <Link to={`/update/${item._id}`}><button onClick={() => handleUpdate(item._id)} className="btn btn-sm btn-square btn-primary w-20" disabled={item.status === 'confirm'}>
+                                        Update
+                                    </button></Link>
+                                </td>                                
+                                
                                 <td><button onClick={() => handleDelete(item._id)} className="btn btn-circle btn-sm btn-error w-20">X</button></td>
                             </tr>)
                         }
