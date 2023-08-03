@@ -28,6 +28,8 @@ module.exports = {
       { allowConstantExport: true },
     ],
     'react/no-unknown-property': ['error', { ignore: ['jsx'] }],
+    "react/prop-types": 'off',
+    "no-unused-vars": "off"
   },
 };
 

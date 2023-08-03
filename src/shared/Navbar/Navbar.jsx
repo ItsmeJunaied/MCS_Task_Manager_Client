@@ -1,13 +1,45 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../Authprovider/Authprovider";
 
 
 const Navbar = () => {
+    const {user, logOut}= useContext(AuthContext);
+
+    const handleLogout = () => {
+        logOut()
+            .then()
+            .catch(error => console.log(error));
+
+    }
     const navlink = <>
         <li><Link to='/' >Home</Link ></li>
         <li><Link to='/addTask' >Add Task</Link ></li>
-        <li><Link to='/viewTask' >View Task</Link ></li>
-        <li><Link to='/viewTask' >Log In</Link ></li>
-        <li><Link to='/viewTask' >Sign In</Link ></li>
+        
+        {
+            user? <>
+            
+            <li><Link to='/viewTask' >View Task</Link ></li>
+            <li><Link to='/login' onClick={handleLogout}>Log Out</Link></li>
+            </> 
+            : 
+            <><li><Link to='/login' >Log In</Link ></li></>
+        }
+
+{
+            user
+            &&
+            <div className="avatar online">
+                <div className="w-10 rounded-full">
+                    <img src={user.photoURL} title={user.displayName} alt="User avatar" />
+                </div>
+            </div>
+
+        }
+
+        {
+            user ? null : <li><Link to='/signup' >Sign Up</Link ></li>
+        }
     </>
     return (
         <div>
