@@ -1,13 +1,39 @@
+import { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { AuthContext } from "../../Authprovider/Authprovider";
+import Swal from "sweetalert2";
 
 const AddTask = () => {
+    const {user}=useContext(AuthContext);
     const {
         register,
         handleSubmit,
         watch,
+        reset
     } = useForm()
 
-    const onSubmit = (data) => console.log(data)
+    const onSubmit = (data) =>{
+        fetch('http://localhost:5000/Task',{
+            method: "POST",
+            headers: {
+                'content-type' : 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res=>res.json())
+        .then(data=>{
+            console.log(data);
+            if (data.insertedId) {
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Task added successfully",
+                  timer: 1500,
+                });
+                reset();
+            }
+        })
+    }
 
     console.log(watch("example"))
     return (
@@ -25,6 +51,7 @@ const AddTask = () => {
                                     name="email"
                                     className="w-full border border-gray-300 p-2 rounded-md focus:outline-none focus:ring focus:border-blue-300"
                                     {...register("email", { required: true })}
+                                    defaultValue={user.email}
                                 />
                             </div>
                             <div className="mb-4">
