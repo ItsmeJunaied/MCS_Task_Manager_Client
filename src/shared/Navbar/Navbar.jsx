@@ -4,7 +4,7 @@ import { AuthContext } from "../../Authprovider/Authprovider";
 
 
 const Navbar = () => {
-    const {user, logOut}= useContext(AuthContext);
+    const { user, logOut, allTask, setAllTask } = useContext(AuthContext);
 
     const handleLogout = () => {
         logOut()
@@ -15,18 +15,20 @@ const Navbar = () => {
     const navlink = <>
         <li><Link to='/' >Home</Link ></li>
         <li><Link to='/addTask' >Add Task</Link ></li>
-        
+
         {
-            user? <>
-            
-            <li><Link to='/viewTask' >View Task</Link ></li>
-            <li><Link to='/login' onClick={handleLogout}>Log Out</Link></li>
-            </> 
-            : 
-            <><li><Link to='/login' >Log In</Link ></li></>
+            user ? <>
+                <>
+                    <li><Link to='/viewTask' >View Task</Link ></li>
+                    <span className="indicator-item badge badge-secondary">{allTask.length}</span>
+                </>
+                <li><Link to='/login' onClick={handleLogout}>Log Out</Link></li>
+            </>
+                :
+                <><li><Link to='/login' >Log In</Link ></li></>
         }
 
-{
+        {
             user
             &&
             <div className="avatar online">

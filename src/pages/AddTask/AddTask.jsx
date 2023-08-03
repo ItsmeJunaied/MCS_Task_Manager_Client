@@ -13,17 +13,20 @@ const AddTask = () => {
     } = useForm()
 
     const onSubmit = (data) =>{
+        const { email, TaskName, Date, Time, Description } = data;
+    const newData = { ...data, status: 'Pending' };
+
         fetch('http://localhost:5000/Task',{
             method: "POST",
             headers: {
                 'content-type' : 'application/json'
             },
-            body: JSON.stringify(data)
+            body: JSON.stringify(newData)
         })
         .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-            if (data.insertedId) {
+        .then(newData=>{
+            console.log(newData);
+            if (newData.insertedId) {
                 Swal.fire({
                   position: "top-end",
                   icon: "success",

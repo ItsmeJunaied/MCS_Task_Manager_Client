@@ -13,6 +13,7 @@ import ViewTask from './pages/ViewTask/ViewTask';
 import LogIN from './pages/LogIN/LogIN';
 import SignUp from './pages/SignUp/SignUp';
 import Authprovider from './Authprovider/Authprovider';
+import PrivateRoute from './PrivateRoute/PrivateRoute';
 
 
 const router = createBrowserRouter([
@@ -30,7 +31,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/viewTask',
-        element: <ViewTask></ViewTask>
+        element: <PrivateRoute><ViewTask></ViewTask></PrivateRoute>
       },
       {
         path: '/login',
