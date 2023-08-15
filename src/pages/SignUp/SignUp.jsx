@@ -18,30 +18,32 @@ const SignUp = () => {
         }
         const { name, email, password, photoURL } = data;
         createUser(email, password)
-        .then((result) => {
-            const loggedUser = result.user;
-                
-            updateUser(name, photoURL)
-            .then(() => {
-              Swal.fire({
-                position: 'top-end',
-                icon: 'success',
-                title: 'logged in',
-                showConfirmButton: false,
-                timer: 1500
-              });
-              
-              navigate(from, { replace: true });
-              reset();
+            .then(result => {
+                const loggedUser = result.user;
+
+                updateUser(name, photoURL)
+                    .then(() => {
+                        const saveUser = { name: name, email: email, image: photoURL, role: 'User' }
+                        fetch('http://localhost:5000/users', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': 'application/json'
+                            },
+                            body: JSON.stringify(saveUser)
+                        })
+                            .then(res => res.json())
+                            .then(data => {
+                                if (data.insertedId) {
+                                    reset();
+                                    navigate('/alldata');
+                                }
+                            })
+
+                    })
+                    .catch(error => console.log(error))
+
             })
-            .catch((error) => {
-              console.log(error);
-            });
-          })
-          .catch((error) => {
-            console.log(error);
-          });
-      };
+    };
     return (
         <>
             <div className="hero min-h-screen bg-base-200">
@@ -68,7 +70,7 @@ const SignUp = () => {
                                     <label className="label">
                                         <span className="label-text">Photo URL</span>
                                     </label>
-                                    <input type="text" {...register("photoURL" , { required: true })} placeholder="photo Url" className="input input-bordered" />
+                                    <input type="text" {...register("photoURL", { required: true })} placeholder="photo Url" className="input input-bordered" />
                                     {errors.photoURL && <span className=" text-red-600">URL required</span>}
                                 </div>
                                 {/* Email */}

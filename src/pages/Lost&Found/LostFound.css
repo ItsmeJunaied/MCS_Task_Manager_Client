@@ -1,0 +1,41 @@
+.bgLF{
+  background-image: url(../../../public/Colorful\ Summer\ Sale\ Promotion\ Banner.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 600px;
+  background-position: center top;
+  /* font-family: 'Caprasimo', cursive; */
+}
+
+
+  @import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Scada&display=swap');
+  
+
+  .rio-navbar {
+    z-index: 1000; /* Adjust this value as needed */
+  }
+  .drawer {
+    z-index: 900; /* Adjust this value to be lower than the Rio Navbar's z-index */
+  }
+  .w-80 {
+    width: 30rem;
+}
+
+.h-full {
+    height: fit-content;
+}
+
+.details-container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.image-container {
+  flex: 1;
+  padding-right: 20px; /* Add some spacing between the image and map */
+}
+
+.item-details {
+  flex: 2;
+}
+

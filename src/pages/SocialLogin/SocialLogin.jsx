@@ -6,16 +6,16 @@ import { useLocation, useNavigate } from 'react-router-dom';
 const SocialLogin = () => {
     const {googleSignIN}=useContext(AuthContext);
     const navigate = useNavigate();
-    // const location = useLocation();
+    const location = useLocation();
 
-    // const from = location.state?.from?.pathname || "/";
+    const from = location.state?.from?.pathname || "/";
     const handleGooglesignIN=()=>{
         googleSignIN()
         .then(res=>{
             const loggeduser= res.user;
             console.log(loggeduser);
-            const saveUser={name:loggeduser.displayName,email:loggeduser.email}
-            fetch('http://localhost:5000/users',{
+            const saveUser={name:loggeduser.displayName,email:loggeduser.email, role: 'User'}
+            fetch('https://task-manager-server-itsmejunaied.vercel.app/users',{
                             method: 'POST',
                             headers:{
                                 'content-type':'application/json'

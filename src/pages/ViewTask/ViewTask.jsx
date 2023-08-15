@@ -1,19 +1,33 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Authprovider/Authprovider";
 import Swal from "sweetalert2";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const ViewTask = () => {
 
-    
+
     const { user, allTask, setAllTask } = useContext(AuthContext);
     // const [allTask, setAllTask] = useState([]);
     useEffect(() => {
-        fetch(`http://localhost:5000/Task?email=${user?.email}`)
-            .then(res => res.json())
-            .then(data => setAllTask(data))
-            .catch(error => console.error(error));
-    }, []);
+        const fetchData = async () => {
+            try {
+                const response = await fetch(`https://task-manager-server-itsmejunaied.vercel.app/Task?email=${user?.email}`);
+                if (response.ok) {
+                    const data = await response.json();
+                    setAllTask(data);
+                } else {
+                    console.error("Failed to fetch data:", response.status);
+                }
+            } catch (error) {
+                console.error("Error fetching data:", error);
+
+                setTimeout(fetchData, 3000);
+            }
+        };
+
+        fetchData();
+    }, [user?.email, setAllTask]);
+
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -26,7 +40,7 @@ const ViewTask = () => {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                fetch(`http://localhost:5000/Task/${id}`, {
+                fetch(`https://task-manager-server-itsmejunaied.vercel.app/Task/${id}`, {
                     method: 'DELETE'
                 })
                     .then(res => res.json())
@@ -46,7 +60,7 @@ const ViewTask = () => {
     }
 
     const handleTaskStatusUpdate = (id) => {
-        fetch(`http://localhost:5000/Task/${id}`, {
+        fetch(`https://task-manager-server-itsmejunaied.vercel.app/Task/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
@@ -76,56 +90,81 @@ const ViewTask = () => {
             <h2 className="text-center font-bold text-3xl text-teal-600 mt-20 mb-20"><span className=" text-amber-500 uppercase">{user?.displayName}</span> Your Tasks</h2>
 
             <div className="overflow-x-auto container mx-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Task Name</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>Update</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {/* row  */}
-                        {
-                            allTask.map((item, index) => < tr key={item._id}>
-                                <th>{index + 1}</th>
-                                <td>{item?.TaskName}</td>
-                                <td>{item?.Date}</td>
-                                <td>{item?.Time}</td>
-                                <td>{item?.Description}</td>
-                                <th>
-                                    {item.status === 'confirm' ? (
-                                        <span className="mr-3 text-amber-500 font-bold">Confirmed</span>
-                                    ) : (
-                                        <>
-                                            {/* <span>Confirm</span> */}
-                                            <button onClick={() => handleTaskStatusUpdate(item._id)} className="btn btn-sm btn-square btn-primary w-20">
-                                                Confirm
-                                            </button>
-                                        </>
-                                    )}
+
+
+                <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
+                    <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-gray-700 uppercase bg-[#1F2937] dark:bg-gray-700 dark:text-gray-400">
+
+                            <tr>
+                                <th scope="col" className="px-6 py-3">
+                                    <span className="sr-only">Image</span>
                                 </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Product
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Location
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Date
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Time
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Update
+                                </th>
+                                <th scope="col" className="px-6 py-3">
+                                    Action
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {
+                                allTask.map((item, index) => < tr key={item._id}
+                                    className="bg-[#1F2937] border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                    <td className="w-32 p-4">
+                                        <img src={item.image} alt="Apple Watch" />
+                                    </td>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                        {item?.ItemName}
+                                    </td>
+                                    <td className="px-6 py-4">
+                                        <div className="flex items-center space-x-3">
+                                            {item?.location}
+                                        </div>
+                                    </td>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                        {item?.Time}
+                                    </td>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                        {item?.Date}
+                                    </td>
+                                    <td className="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+                                        {item?.Date}
+                                    </td>
+                                    {/* <td className="px-6 py-4">
+                                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                                    </td> */}
+                                    <td>
+                                        <Link to={`/update/${item._id}`}><button className="font-medium text-blue-600 dark:text-blue-500 hover:underline" disabled={item.status === 'confirm'}>
+                                            Update
+                                        </button></Link>
+                                    </td>
+                                    {/* <td className="px-6 py-4">
+                                        <a href="#" className="font-medium text-red-600 dark:text-red-500 hover:underline">Remove</a>
+                                    </td> */}
+                                    <td><button onClick={() => handleDelete(item._id)} className="btn btn-circle btn-sm btn-error w-20">X</button></td>
+                                </tr>)
+                            }
+                        </tbody>
+                    </table>
+                </div>
 
-
-
-                                <td>
-                                    <Link to={`/update/${item._id}`}><button onClick={() => handleUpdate(item._id)} className="btn btn-sm btn-square btn-primary w-20" disabled={item.status === 'confirm'}>
-                                        Update
-                                    </button></Link>
-                                </td>                                
-                                
-                                <td><button onClick={() => handleDelete(item._id)} className="btn btn-circle btn-sm btn-error w-20">X</button></td>
-                            </tr>)
-                        }
-
-                    </tbody>
-                </table>
             </div>
         </div>
     );

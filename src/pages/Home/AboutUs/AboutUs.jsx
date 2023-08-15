@@ -1,37 +1,63 @@
-import { Link } from 'react-router-dom';
-import img from '../../../../public/aboutus.avif';
+import React from 'react';
+import img3 from '../../../../public/pexels-1.jpg';
+import img from '../../../../public/parallax_about.jpg';
 const AboutUs = () => {
+    const divStyle = {
+        backgroundImage: `url(${img})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        height: '600px',
+
+    };
     return (
-        <div className="bg-white">
-            <div className="container mx-auto p-8">
-            <h2 className="text-4xl font-semibold  text-purple-800 text-center mb-20 mt-20">About Us</h2>
-                <div className="flex flex-wrap items-center ">
-                    <div className="w-full md:w-1/2">
-                        <img src={img} alt="About Us Image" className="w-full rounded-md shadow-md md:h-[400px]" />
-                    </div>
-                    <div className="w-full md:w-1/2 md:pl-8 mt-4 md:mt-0 border p-6 rounded-lg shadow-md md:h-[400px]">
-                        
-                        <p className="mb-4 text-gray-700">
-                            We are a company that provides a better facility Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
-                        </p>
-                        <ul className="list-disc pl-6 text-gray-700">
-                            <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit</li>
-                            <li>Sed do eiusmod tempor incididunt ut labore</li>
-                            <li>Ut enim ad minim veniam, quis nostrud exercitation</li>
-                        </ul>
-                        <Link
-                            to={'/addTask'}
-                            className="inline-block mt-4 px-6 py-3 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-md shadow-md hover:shadow-lg transition duration-300 ease-in-out"
-                        >
-                            Learn More
-                        </Link>
+
+        <div>
+            <div style={divStyle}>
+                <div className=' container mx-auto '>
+                    <div className=' flex pt-20'>
+                        <div className=' w-1/2'>
+                            <p className=' text-amber-400 text-xl font-bold'>Our Camp</p>
+                            <h2 className=' text-5xl font-extrabold text-white'>Avout Music Camp</h2>
+                            <h2 className=' mt-10 w-[700px] text-2xl text-amber-400'>Integer in justo euismod nulla feugiat lacinia non porta velit. Vestibulum vulputate purus sit amet vestibulum ultrices mauris malesuada.</h2>
+                            <p className=' text-white mt-5 w-[700px]'>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut elementum sem ligula. Phasellus eleifend vel justo sit amet volutpat. Duis vitae maximus ligula, nec mattis libero. Donec eget felis odio.</p>
+                            <button className='btn w-28 mt-5 bg-[#EFCF4F]'>View More</button>
+                        </div>
+                        <div className='grid w-screen place-items-center' style={{ position: 'relative' }}>
+                            <div className=' rounded-lg' style={{ position: 'absolute', top: 50, right: 200, width: '30%', height: '400px', backgroundColor: '#EFCF4F', zIndex: 1 }}></div>
+                            <div style={{ position: 'relative', zIndex: 2 }}>
+                                <img className=' rounded-lg' style={{ height: '400px' }} src={img3} alt='' />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
+            <div className='bg-[#EFCF4F] h-[200px]'>
+                <div className=' flex container mx-auto justify-center pt-10 gap-20'>
+                    <div>
+                        <h6 className=' text-7xl font-extrabold text-center text-white'>27</h6>
+                        <h2 className='text-3xl font-bold text-cyan-900 text-center'>Professoinal</h2>
+                        <h2 className='text-2xl font-bold text-orange-700 text-center'>Class</h2>
+                    </div>
+                    <div>
+                        <h6 className=' text-7xl font-extrabold text-center text-white'>54</h6>
+                        <h2 className='text-3xl font-bold text-cyan-900 text-center'>Learning</h2>
+                        <h2 className='text-2xl font-bold text-orange-700 text-center'>Group</h2>
+                    </div>
+                    <div>
+                        <h6 className=' text-7xl font-extrabold text-center text-white'>1K+</h6>
+                        <h2 className='text-3xl font-bold text-cyan-900 text-center'>Happy</h2>
+                        <h2 className='text-2xl font-bold text-orange-700 text-center'>Students</h2>
+                    </div>
+                    <div>
+                        <h6 className=' text-7xl font-extrabold text-center text-white'>33</h6>
+                        <h2 className='text-3xl font-bold text-cyan-900 text-center'>Music</h2>
+                        <h2 className='text-2xl font-bold text-orange-700 text-center'>Class</h2>
+                    </div>               
+                </div>
+            </div>
         </div>
-
-
     );
 };
 

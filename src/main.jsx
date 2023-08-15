@@ -15,6 +15,10 @@ import SignUp from './pages/SignUp/SignUp';
 import Authprovider from './Authprovider/Authprovider';
 import PrivateRoute from './PrivateRoute/PrivateRoute';
 import UpdatePage from './pages/UpdatePage/UpdatePage';
+import FoundItem from './pages/FoundItem/FoundItem';
+import LostFound from './pages/Lost&Found/LostFound';
+import DashBoard from './pages/DashBoard/DashBoard';
+import AdminComment from './AdminComment/AdminComment';
 
 
 const router = createBrowserRouter([
@@ -31,8 +35,13 @@ const router = createBrowserRouter([
         element: <PrivateRoute><AddTask></AddTask></PrivateRoute>
       },
       {
-        path: '/viewTask',
-        element: <PrivateRoute><ViewTask></ViewTask></PrivateRoute>
+        path: '/foundItem',
+        element: <PrivateRoute><FoundItem></FoundItem></PrivateRoute>
+      },
+      
+      {
+        path: '/alldata',
+        element: <LostFound></LostFound>
       },
       {
         path: '/login',
@@ -49,6 +58,21 @@ const router = createBrowserRouter([
       },
     ]
   },
+  {
+    path:'dashboard',
+    element: <DashBoard></DashBoard>,
+    children:[
+      {
+        path: 'viewTask',
+        element: <ViewTask></ViewTask>
+      },
+      {
+        path: 'feedback',
+        element: <AdminComment></AdminComment>
+      },
+      
+    ]
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
